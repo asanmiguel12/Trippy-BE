@@ -1,0 +1,30 @@
+# Git
+.git
+.gitignore
+
+# Build artifacts
+build/
+.gradle/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+
+# Node.js (if any accidentally get created)
+node_modules/
+package.json
+package-lock.json
+yarn.lock
+.npm
+.yarn
+
+# Documentation
+README.md
+*.md
+
