@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: trippy-be
+    env: java
+    buildCommand: ./gradlew build
+    startCommand: java -cp "build/classes/java/main:build/resources/main" org.example.Main
+    envVars:
+      - key: JAVA_VERSION
+        value: 17
+
