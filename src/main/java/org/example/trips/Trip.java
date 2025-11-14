@@ -1,31 +1,72 @@
 package org.example.trips;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "trips")
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
-    private String name;
-    private String description;
+    
+    @Column(name = "start_date", nullable = false)
     private String startDate;
+    
+    @Column(name = "end_date", nullable = false)
     private String endDate;
+    
+    @Column(nullable = false)
     private String location;
+    
+    @Column(nullable = false)
+    private String description;
+    
+    // Transient fields (not persisted to database)
+    @Transient
+    private String name;
+    
+    @Transient
     private String budget;
+    
+    @Transient
     private String activities;
+    
+    @Transient
     private String accommodations;
+    
+    @Transient
     private String transportation;
+    
+    @Transient
     private String food;
+    
+    @Transient
     private String thingsToDo;
+    
+    @Transient
     private String notes;
+    
+    @Transient
     private String photos;
+    
+    @Transient
     private String videos;
+    
+    @Transient
     private String documents;
+    
+    @Transient
     private String links;
+    
+    @Transient
     private String tags;
+    
+    @Transient
     private String categories;
+    
+    @Transient
     private String keywords;
 
     // Getters and Setters
@@ -35,22 +76,6 @@ public class Trip {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getStartDate() {
@@ -75,6 +100,22 @@ public class Trip {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getBudget() {
