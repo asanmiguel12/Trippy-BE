@@ -26,24 +26,24 @@ public class Trip {
     // Transient fields (not persisted to database)
     @Transient
     private String name;
-    
+
     @Transient
-    private String budget;
-    
-    @Transient
-    private String activities;
-    
-    @Transient
-    private String accommodations;
-    
-    @Transient
-    private String transportation;
-    
+    private boolean isPublic;
+
     @Transient
     private String food;
-    
+
+    @Transient
+    private String transportation;
+
+    @Transient
+    private String accommodations;
+
     @Transient
     private String thingsToDo;
+
+    @Transient
+    private String activities;
     
     @Transient
     private String notes;
@@ -118,20 +118,12 @@ public class Trip {
         this.name = name;
     }
 
-    public String getBudget() {
-        return budget;
+    public boolean isPublic() {
+        return isPublic;
     }
 
-    public void setBudget(String budget) {
-        this.budget = budget;
-    }
-
-    public String getActivities() {
-        return activities;
-    }
-
-    public void setActivities(String activities) {
-        this.activities = activities;
+    public void setPublic(boolean isPublic) {
+        this.isPublic = isPublic;
     }
 
     public String getAccommodations() {
