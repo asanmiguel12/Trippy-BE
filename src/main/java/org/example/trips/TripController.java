@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/trips")
 public class TripController {
     
