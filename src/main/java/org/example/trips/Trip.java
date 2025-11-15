@@ -1,5 +1,7 @@
 package org.example.trips;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import jakarta.persistence.Transient;
 
@@ -23,10 +25,10 @@ public class Trip {
     @Column(nullable = false)
     private String description;
     
-    // Transient fields (not persisted to database)
-    @Transient
+    @Column(nullable = false)
     private String name;
-
+    
+    // Transient fields (not persisted to database)
     @Transient
     private boolean isPublic;
 
@@ -43,10 +45,15 @@ public class Trip {
     private String thingsToDo;
 
     @Transient
-    private String activities;
+    private Double budget;
     
     @Transient
+    private List<String> activities;
+
+
+    @Transient
     private String notes;
+    
     
     @Transient
     private String photos;
@@ -109,6 +116,23 @@ public class Trip {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Double getBudget() {
+        return budget;
+    }
+    
+    public void setBudget(Double budget) {
+        this.budget = budget;
+    }
+    
+    public List<String> getActivities() {
+        return activities;
+    }
+    
+    public void setActivities(List<String> activities) {
+        this.activities = activities;
+    }
+    
 
     public String getName() {
         return name;
@@ -220,25 +244,5 @@ public class Trip {
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
-    }
-
-    public Object getActivities() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getActivities'");
-    }
-
-    public Object getBudget() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBudget'");
-    }
-
-    public void setBudget(Object budget) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setBudget'");
-    }
-
-    public void setActivities(Object activities2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setActivities'");
     }
 }
