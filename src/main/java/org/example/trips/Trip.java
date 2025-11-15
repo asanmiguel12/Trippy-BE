@@ -221,4 +221,24 @@ public class Trip {
     public void setKeywords(String keywords) {
         this.keywords = keywords;
     }
+
+    public Object getActivities() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getActivities'");
+    }
+
+    public Object getBudget() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBudget'");
+    }
+
+    public void setBudget(Object budget) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setBudget'");
+    }
+
+    public void setActivities(Object activities2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setActivities'");
+    }
 }
