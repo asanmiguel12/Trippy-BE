@@ -1,19 +1,48 @@
 # Trippy-BE
-Backend for Trippy Itinerary Planner
+Backend for Trippy Itinerary Planner# 📦 Project Name
+A backend Java application built with clean architecture, RESTful API design, and Supabase‑powered data persistence.
 
-## Deployment on Render
+---
 
-This project uses Docker for deployment on Render. The `render.yaml` file is configured for Blueprint deployment.
+## 🚀 Overview
+This project provides a lightweight backend service built in Java, exposing REST endpoints for core application features.  
+Supabase is used as the PostgreSQL database and authentication provider, while Render hosts the deployed API.
 
-### Important: Service Configuration
+---
 
-If you see errors like `yarn start` or `Couldn't find a package.json file`, it means Render is configured as a Node.js service instead of Docker.
+## 🛠️ Tech Stack
+- Java 17+
+- Spring Boot (or your chosen framework)
+- Supabase (PostgreSQL + Auth)
+- Render (Deployment)
+- Maven or Gradle
+- JSON-based REST APIs
 
-**To fix:**
-1. Go to your Render dashboard → Service Settings
-2. Under "Build & Deploy", change Environment from "Node" to **"Docker"**
-3. Set Dockerfile Path to `./Dockerfile`
-4. Clear any Build Command and Start Command fields
-5. Save and redeploy
+---
 
-Alternatively, delete the service and recreate it using Render Blueprint, which will automatically use the `render.yaml` configuration.
+## 🧩 Features
+- RESTful API endpoints  
+- Supabase-backed database operations  
+- Authentication & authorization (optional)  
+- Error handling & validation  
+- Environment-based configuration  
+- Deployed API accessible via Render  
+
+---
+
+## 🌐 Deployment (Render)
+The backend is deployed on Render for continuous hosting and automatic redeploys on push.
+
+![Render](TrippyBE.png)
+
+## 🗄️ Database (Supabase)
+Supabase is used for:
+- PostgreSQL data storage  
+- Row-level security (optional)  
+- Auth (optional)  
+- Real-time updates (optional)
+
+### Supabase Database
+![Supabase](TrippyDB.png)
+
+---
