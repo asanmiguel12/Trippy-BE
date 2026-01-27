@@ -23,7 +23,7 @@ WORKDIR /app
 
 # Copy the bootable JAR from the builder
 # The bootJar task creates the executable JAR (without -plain suffix)
-COPY --from=builder /home/gradle/project/build/libs/*.jar app.jar
+COPY --from=builder /home/gradle/project/build/libs/app.jar app.jar
 
 # Expose default port (Render overrides with $PORT)
 EXPOSE 8080
