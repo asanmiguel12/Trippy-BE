@@ -1,4 +1,4 @@
-package auth;
+package org.example.auth;
 
 import org.springframework.web.bind.annotation.*;
 

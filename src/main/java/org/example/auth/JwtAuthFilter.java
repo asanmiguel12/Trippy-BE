@@ -1,4 +1,4 @@
-package auth;
+package org.example.auth;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

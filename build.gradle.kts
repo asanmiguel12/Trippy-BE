@@ -45,6 +45,6 @@ tasks.bootJar {
 }
 
 springBoot {
-    mainClass.set("org.example.TrippyBeApplication")
+    mainClass.set("org.example.Main)
 }
 

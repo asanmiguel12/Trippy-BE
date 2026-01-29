@@ -1,4 +1,4 @@
-package auth;
+package org.example.auth;
 
 public class AuthResponse {
     public String accessToken;

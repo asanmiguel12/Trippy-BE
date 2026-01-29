@@ -1,7 +1,7 @@
 package org.example.config;
 
 import java.util.List;
-import auth.JwtAuthFilter;
+import org.example.auth.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
