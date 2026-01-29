@@ -5,46 +5,59 @@ import org.example.auth.JwtService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
 
 import java.util.List;
 
 @Configuration
 public class SecurityConfig {
 
-    private final JwtService jwtService;
-    private final UserDetailsService userDetailsService;
+    // 🔐 MOCK USER (temporary)
+    @Bean
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+        UserDetails user = User.builder()
+                .username("test")
+                .password(passwordEncoder.encode("password"))
+                .roles("USER")
+                .build();
 
-    public SecurityConfig(
+        return new InMemoryUserDetailsManager(user);
+    }
+
+    // 🔐 PASSWORD ENCODER
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    // 🔐 JWT FILTER
+    @Bean
+    public JwtAuthFilter jwtAuthFilter(
             JwtService jwtService,
             UserDetailsService userDetailsService
     ) {
-        this.jwtService = jwtService;
-        this.userDetailsService = userDetailsService;
-    }
-
-    @Bean
-    public JwtAuthFilter jwtAuthFilter() {
         return new JwtAuthFilter(jwtService, userDetailsService);
     }
 
+    // 🔐 SECURITY FILTER CHAIN
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)
-            throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            JwtAuthFilter jwtAuthFilter
+    ) throws Exception {
 
         http
             .csrf(csrf -> csrf.disable())
@@ -54,13 +67,14 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .addFilterBefore(
-                jwtAuthFilter(),
+                jwtAuthFilter,
                 UsernamePasswordAuthenticationFilter.class
             );
 
         return http.build();
     }
 
+    // 🔐 AUTH MANAGER (for login)
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration config
@@ -68,19 +82,14 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
+    // 🌍 CORS
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(List.of(
                 "http://localhost:5173",
-                "https://trippy-fe.onrender.com",
-                "http://localhost:8080"
+                "https://trippy-fe.onrender.com"
         ));
         config.setAllowedMethods(List.of(
                 "GET", "POST", "PUT", "DELETE", "OPTIONS"
@@ -94,16 +103,4 @@ public class SecurityConfig {
 
         return source;
     }
-
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-    UserDetails user = User.builder()
-            .username("test")
-            .password(passwordEncoder.encode("password"))
-            .roles("USER")
-            .build();
-
-    return new InMemoryUserDetailsManager(user);
-}
-
 }
