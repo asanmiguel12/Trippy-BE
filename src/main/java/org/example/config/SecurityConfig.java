@@ -16,6 +16,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
 
 import java.util.List;
 
@@ -89,4 +93,16 @@ public class SecurityConfig {
 
         return source;
     }
+
+    @Bean
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+    UserDetails user = User.builder()
+            .username("test")
+            .password(passwordEncoder.encode("password"))
+            .roles("USER")
+            .build();
+
+    return new InMemoryUserDetailsManager(user);
+}
+
 }
