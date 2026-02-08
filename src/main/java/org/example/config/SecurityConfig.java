@@ -1,6 +1,7 @@
 package org.example.config;
 
 import org.example.auth.JwtAuthFilter;
+import org.example.auth.JwtService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -65,6 +66,11 @@ public class SecurityConfig {
                 .roles("USER")
                 .build()
         );
+    }
+
+    @Bean
+    public JwtAuthFilter jwtAuthFilter(JwtService jwtService, UserDetailsService userDetailsService) {
+        return new JwtAuthFilter(jwtService, userDetailsService);
     }
 
     @Bean
