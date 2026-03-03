@@ -40,6 +40,7 @@ public class SecurityConfig {
                 // 🌍 Public GET/HEAD access (no token required - HEAD for UptimeRobot)
                 .requestMatchers(HttpMethod.GET, "/api/trips/**").permitAll()
                 .requestMatchers(HttpMethod.HEAD, "/api/trips/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // <- add this line
 
                 // 🔒 Everything else requires JWT
                 .anyRequest().authenticated()
