@@ -12,7 +12,7 @@ Supabase is used as the PostgreSQL database and authentication provider, while R
 
 ## 🛠️ Tech Stack
 - Java 17+
-- Spring Boot (or your chosen framework)
+- Spring Boot 
 - Supabase (PostgreSQL + Auth)
 - Render (Deployment)
 - Maven or Gradle
@@ -23,7 +23,7 @@ Supabase is used as the PostgreSQL database and authentication provider, while R
 ## 🧩 Features
 - RESTful API endpoints  
 - Supabase-backed database operations  
-- Authentication & authorization (optional)  
+- Authentication & authorization 
 - Error handling & validation  
 - Environment-based configuration  
 - Deployed API accessible via Render  
@@ -38,9 +38,9 @@ The backend is deployed on Render for continuous hosting and automatic redeploys
 ## 🗄️ Database (Supabase)
 Supabase is used for:
 - PostgreSQL data storage  
-- Row-level security (optional)  
-- Auth (optional)  
-- Real-time updates (optional)
+- Row-level security
+- Auth 
+- Real-time updates 
 
 ### Supabase Database
 ![Supabase](TrippyDB.png)
