@@ -5,6 +5,7 @@ import org.example.auth.JwtService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,17 +18,26 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, 
+        JwtAuthFilter jwtAuthFilter, 
+        AuthenticationProvider authenticationProvider
+    ) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+            .exceptionHandling(ex -> ex
+                // Without formLogin/httpBasic, Spring defaults to 403 for auth failures.
+                // For APIs, return 401 so clients can distinguish "not logged in" vs "forbidden".
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
             )
             .authorizeHttpRequests(auth -> auth
                 // 🌍 Public endpoints
@@ -40,12 +50,12 @@ public class SecurityConfig {
                 // 🌍 Public GET/HEAD access (no token required - HEAD for UptimeRobot)
                 .requestMatchers(HttpMethod.GET, "/api/trips/**").permitAll()
                 .requestMatchers(HttpMethod.HEAD, "/api/trips/**").permitAll()
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // <- add this line
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // 
 
                 // 🔒 Everything else requires JWT
                 .anyRequest().authenticated()
             )
-            .authenticationProvider(authenticationProvider(null))
+            .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
