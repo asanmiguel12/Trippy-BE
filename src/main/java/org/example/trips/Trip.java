@@ -28,7 +28,7 @@ public class Trip {
     @Column(nullable = false)
     private String name;
 
-    @Column(name = "user_id")
+    @Column(name = "userId")
     private Long userId;
 
     @Transient
