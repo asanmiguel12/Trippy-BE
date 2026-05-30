@@ -27,9 +27,8 @@ public class Trip {
     
     @Column(nullable = false)
     private String name;
-    
-    // Transient fields (not persisted to database)
-    @Transient
+
+    @Column(name = "user_id")
     private Long userId;
 
     @Transient
