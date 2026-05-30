@@ -49,6 +49,18 @@ public class TripController {
         }
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Trip>> getTripsByUserId(@PathVariable Long userId) {
+        List<Trip> trips = tripService.getTripsByUserId(userId);
+        return new ResponseEntity<>(trips, HttpStatus.OK);
+    }   
+
+    @PutMapping("/user/{userId}")
+    public ResponseEntity<List<Trip>> updateTripsByUserId(@PathVariable Long userId, @RequestBody List<Trip> trips) {
+        List<Trip> updatedTrips = tripService.updateTripsByUserId(userId, trips);
+        return new ResponseEntity<>(updatedTrips, HttpStatus.OK);
+    }   
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTrip(@PathVariable Long id) {
         tripService.deleteTrip(id);

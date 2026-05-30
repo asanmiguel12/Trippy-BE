@@ -28,6 +28,14 @@ public class TripService {
         return tripRepository.findById(id);
     }
 
+    public List<Trip> getTripsByUserId(Long userId) {
+        return tripRepository.findByUserId(userId);
+    }
+
+    public List<Trip> updateTripsByUserId(Long userId, List<Trip> trips) {
+        return tripRepository.saveAll(trips);
+    }
+
     public Trip updateTrip(Long id, Trip tripDetails) {
         Trip trip = tripRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Trip not found with id: " + id));
