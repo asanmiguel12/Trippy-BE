@@ -31,9 +31,18 @@ public class AuthService {
 
     public AuthResponse login(AuthRequest request) {
 
+        String email = request.getEmail();
+
+        if (email == null || email.isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Email is required"
+            );
+        }
+
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
+                        email,
                         request.getPassword()
                 )
         );
@@ -45,15 +54,26 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest request) {
-        String email = request.getEmail() == null ? null : request.getEmail().trim().toLowerCase();
+
+        String email = request.getEmail() == null
+                ? null
+                : request.getEmail().trim().toLowerCase();
+
         String password = request.getPassword();
 
-        if (email == null || email.isBlank() || password == null || password.isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email and password are required.");
+        if (email == null || email.isBlank() ||
+            password == null || password.isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Email and password are required."
+            );
         }
 
         if (userRepository.findByEmail(email).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists.");
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "User already exists."
+            );
         }
 
         User user = new User();
@@ -62,6 +82,8 @@ public class AuthService {
         user.setRole("ROLE_USER");
 
         User savedUser = userRepository.save(user);
+
+        // IMPORTANT: ensure JWT subject = email
         String jwt = jwtService.generateToken(savedUser);
 
         return new AuthResponse(jwt);

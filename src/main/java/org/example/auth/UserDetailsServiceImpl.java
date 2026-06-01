@@ -1,5 +1,6 @@
 package org.example.auth;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,10 +19,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        // `username` here is actually the user's email, as sent by the frontend
         return userRepository.findByEmail(username)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found: " + username)
                 );
+    }
+
+    public Long getUserIdByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"))
+                .getId();
     }
 }

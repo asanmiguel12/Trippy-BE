@@ -4,6 +4,7 @@ public class AuthRequest {
 
     private String username;
     private String password;
+    private String email;
 
     public AuthRequest() {
     }
@@ -16,6 +17,10 @@ public class AuthRequest {
         return password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -23,4 +28,9 @@ public class AuthRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }
